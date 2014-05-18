@@ -48,25 +48,33 @@ public class Trie {
      */
     public Trie(String[] sa) {
         this(); 
-        addAll(sa);
     }
  
-    /**
-     *  Constructor that takes a Collection<String> of words to add
-     *
-     *  @param sc a Collection<String> of words to be added
-     */
-    public Trie(Collection<String> sc) {
-        this();
-        addAll(sc);
+    
+    public List<String> get(String s)
+    {
+    	 TrieNode curr_node = root;
+         for (int i = 0, n = s.length(); i < n; i++) {
+             Character c = s.charAt(i);
+             if (curr_node.getChildNodeMaps().containsKey(c)){
+             	
+             	System.out.println(c);
+                 curr_node = curr_node.getChildNodeMaps().get(c);
+             	}
+             else 
+            	 return new ArrayList<String>(); 
+         }
+         if (curr_node.getChildNodeMaps().containsKey('\0'))
+             return curr_node.getEncoders();
+         else 
+             return new ArrayList<String>(); 
     }
- 
     /**
      *  Adds a string to the trie
      * 
      *  @param s String to add to the trie
      */
-    public void add(String s) {
+    public void put(String s, List<String> dictWords) {
        TrieNode curr_node = root;
         for (int i = 0, n = s.length(); i < n; i++) {
             Character c = s.charAt(i);
@@ -78,7 +86,7 @@ public class Trie {
             }
         }
         curr_node.getChildNodeMaps().put('\0', new TrieNode()); // term
-        curr_node.setEncoders(Arrays.asList(new String[]{"test","test"}));
+        curr_node.setEncoders(dictWords);
     }
  
     /**
@@ -86,20 +94,14 @@ public class Trie {
      * 
      *  @param sa String[] to add to the trie
      */
-    public void addAll(String[] sa) {
-        for (String s: sa)
-            add(s);
-    }
+    
  
     /**
      *  Adds a Collection<String> of words to the trie
      * 
      *  @param sc Collection<String> to add to the trie
      */
-    public void addAll(Collection<String> sc) {
-        for (String s: sc)
-            add(s);
-    }
+    
  
     /** 
      *  Returns true iff the String is in the trie
@@ -127,14 +129,16 @@ public class Trie {
  
     public static void main(String[] args) {
         Trie t = new Trie();
-        t.add("APPLES");
-        t.add("APPLE");
-        t.add("APPLESAUCE");
-        t.add("APPLICATION"); 
+        t.put("APPLES", Arrays.asList(new String[]{"green apples","red apples"}));
+        t.put("APPLE", Arrays.asList(new String[]{"green apple","red apple"}));
+        t.put("APPLESAUCE",Arrays.asList(new String[]{"green applesauce","red applesauce"}));
+        t.put("APPLICATION",Arrays.asList(new String[]{"green appllication","red apple"})); 
         System.out.println(t.contains("FOO")    + " " + false);
         System.out.println(t.contains("APPL")   + " " + false);
         System.out.println(t.contains("APPLES") + " " + false);
         System.out.println(t.contains("APPLE")  + " " + true);
+        
+        System.out.println(t.get("APPLE")  + " " + true);
     }
 }
 

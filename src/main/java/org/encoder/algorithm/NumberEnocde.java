@@ -12,7 +12,10 @@ public class NumberEnocde {
 	{
 		gatherer.initializeNumberToDictWordsLookup();
 		
-		
+		for(Character digit : phoneNumber.toCharArray())
+		{
+			
+		}
 		
 		return null;
 		

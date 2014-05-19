@@ -8,7 +8,7 @@ public class ReadDictionery {
 	
 	
 	public List<String> getDictioneryWords()
-	{
+	{  
 		return Arrays.asList(new String[]{"ad","ac","gxd","gzc","gzca"});
 		
 		}
